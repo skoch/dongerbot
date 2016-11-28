@@ -1,14 +1,14 @@
 {
-  "name": "dongles",
+  "name": "dongerbot",
   "version": "1.0.0",
-  "description": "Dongles!",
+  "description": "Dongerbot!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/skoch/dongles.git"
   },
-  "main": "dongles.js",
+  "main": "dongerbot.js",
   "scripts": {
-    "start": "node dongles.js"
+    "start": "node dongerbot.js"
   },
   "author": "Stephen Koch <stephen@hardcandyshell.com>",
   "license": "ISC",
