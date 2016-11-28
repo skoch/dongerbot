@@ -1,0 +1,24 @@
+{
+  "name": "dongles",
+  "version": "1.0.0",
+  "description": "Dongles!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skoch/dongles.git"
+  },
+  "main": "dongles.js",
+  "scripts": {
+    "start": "node dongles.js"
+  },
+  "author": "Stephen Koch <stephen@hardcandyshell.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "request": "^2.79.0",
+    "sheetrock": "^1.1.2"
+  },
+  "engines": {
+    "node": "6.7.0"
+  }
+}
