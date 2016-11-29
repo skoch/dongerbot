@@ -26,6 +26,10 @@ app.get('/slack-auth', function(req, res) {
     }};
 
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
+
+        let bot_access_token = JSON.parse(body).bot.bot_access_token;
+        console.log('bot_access_token', bot_access_token);
+
         if (!error && response.statusCode == 200) {
             res.redirect(process.env.THANK_YOU_REDIRECT);
         }
@@ -59,9 +63,7 @@ app.post('/', function(req, res) {
 
                 let data = {form: {
                     // dongerbot token
-                    "token": "xoxb-111099496950-DcPmvvpn544CTx2OapnNzxSC",
-                    // testing token generated on Slack
-                    // "token": "xoxp-2151820749-2304102342-13165708866-92ad67edf7",
+                    "token": process.env.SLACK_BOT_TOKEN,
                     "username": text,
                     "channel": channel,
                     "text": donger,
@@ -71,21 +73,18 @@ app.post('/', function(req, res) {
                 // console.log('data', data);
 
                 request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
-                    console.log('>>>>>', response.body);
-                    console.log('ok?', response.body.ok);
-                    console.log('ok??', response.ok);
-                    console.log('ok???', response.body["ok"]);
-                    console.log('ok????', JSON.parse(body).ok);
+                    let json = JSON.parse(body);
+                    console.log('ok?', json.ok);
 
-                    // if (!response.body.ok) {
-                    //     console.log('bad');
-                    //     console.log('response.body.error', response.body.error);
-                    // } else {
-                    //     console.log('good');
-                    //     if (response.body.warning) {
-                    //         console.log('BUT response.body.warning', response.body.warning);
-                    //     }
-                    // }
+                    if (!json.ok) {
+                        console.log('bad');
+                        console.log('error', json.error);
+                    } else {
+                        console.log('good');
+                        if (json.warning) {
+                            console.log('BUT warning', json.warning);
+                        }
+                    }
 
                     // if (!error && response.statusCode == 200) {
                     //     console.log('allgood?');
