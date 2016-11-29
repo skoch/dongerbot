@@ -41,6 +41,8 @@ app.post('/', function(req, res) {
 
         let text = req.body.text ? req.body.text : 'excuseme';
 
+        console.log('req.body.channel_id', req.body.channel_id);
+
         sheetrock({
             // url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
             // url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit?usp=sharing`,
@@ -53,6 +55,13 @@ app.post('/', function(req, res) {
 
                 // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
                 let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
+
+                // var response = {
+                //     "token": "xoxb-111099496950-DcPmvvpn544CTx2OapnNzxSC",
+                //     "response_type": "in_channel",
+                //     "text": donger,
+                // }
+                // res.json(response);
 
                 var response = {
                     "response_type": "in_channel",
