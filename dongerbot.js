@@ -61,14 +61,15 @@ app.post('/', function(req, res) {
                 // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
                 let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
 
-                let data = {form: {
+                // let data = {form: {
+                let data = {
                     // dongerbot token
                     "token": process.env.SLACK_BOT_TOKEN,
                     "username": text,
                     "channel": channel,
                     "text": donger,
                     "as_user": true,
-                }};
+                };
 
                 console.log('data', data);
 
