@@ -57,7 +57,7 @@ app.post('/', function(req, res) {
                 // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
                 let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
 
-                var response = {
+                var data = {
                     // dongerbot token
                     "token": "xoxb-111099496950-DcPmvvpn544CTx2OapnNzxSC",
                     // testing token generated on Slack
@@ -68,18 +68,18 @@ app.post('/', function(req, res) {
                     "as_user": true,
                 }
 
-                console.log('response', response);
+                // console.log('data', data);
 
-                request.post('https://slack.com/api/chat.postMessage', response, function (error, response, body) {
-                    console.log('chat.postMessage response', body.ok);
+                request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
+                    console.log('>>>>>', response.ok);
 
-                    if (!body.ok) {
+                    if (!response.ok) {
                         console.log('bad');
-                        console.log('body.error', body.error);
+                        console.log('response.error', response.error);
                     } else {
                         console.log('good');
                         if (body.warning) {
-                            console.log('BUT body.warning', body.warning);
+                            console.log('BUT response.warning', response.warning);
                         }
                     }
 
