@@ -70,7 +70,7 @@ app.post('/', function(req, res) {
                     "as_user": true,
                 }};
 
-                // console.log('data', data);
+                console.log('data', data);
 
                 request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
                     let json = JSON.parse(body);
