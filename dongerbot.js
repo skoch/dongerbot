@@ -31,7 +31,7 @@ app.get('/slack-auth', function(req, res) {
         // console.log('bot_access_token', bot_access_token);
 
         let token = JSON.parse(body).access_token; // Auth token
-        console.log('token', token);
+        console.log('access_token', token);
 
         if (!error && response.statusCode == 200) {
             res.redirect(process.env.THANK_YOU_REDIRECT);
@@ -49,11 +49,9 @@ app.post('/', function(req, res) {
         let text = req.body.text ? req.body.text : 'excuseme';
         let channel = req.body.channel_id ? req.body.channel_id : '#general';
 
-        console.log('channel', channel);
+        // console.log('channel', channel);
 
         sheetrock({
-            // url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
-            // url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit?usp=sharing`,
             url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit#gid=0`,
             query: `Select B where A = "${text}"`,
             reset: true,
@@ -64,47 +62,38 @@ app.post('/', function(req, res) {
 
                 let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
 
-                let data = {form: {
-                    // "token": process.env.SLACK_BOT_TOKEN,
-                    "token": process.env.SLACK_API_TOKEN,
-                    // "username": text,
-                    "channel": channel,
-                    "text": donger,
-                    // "as_user": true,
-                }};
-
-                console.log('data', data);
-
-                request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
-                    let json = JSON.parse(body);
-                    console.log('ok?', json.ok);
-
-                    if (!json.ok) {
-                        console.log('bad');
-                        console.log('error', json.error);
-                    } else {
-                        console.log('good');
-                        if (json.warning) {
-                            console.log('BUT warning', json.warning);
-                        }
-                    }
-
-                    // if (!error && response.statusCode == 200) {
-                    //     console.log('allgood?');
-                    // }
-
-                    // if (error) {
-                    //     console.log('error', error);
-                    // }
-                });
-                // res.json(response);
-
-                // var response = {
-                //     "response_type": "in_channel",
+                // let data = {form: {
+                //     // "token": process.env.SLACK_BOT_TOKEN,
+                //     "token": process.env.SLACK_API_TOKEN,
+                //     // "username": text,
+                //     "channel": channel,
                 //     "text": donger,
-                // }
-                // res.json(response);
-                res.json({"text": "working..."});
+                //     // "as_user": true,
+                // }};
+
+                // // console.log('data', data);
+
+                // request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
+                //     let json = JSON.parse(body);
+                //     console.log('ok?', json.ok);
+
+                //     if (!json.ok) {
+                //         console.log('bad');
+                //         console.log('error', json.error);
+                //     } else {
+                //         console.log('good');
+                //         if (json.warning) {
+                //             console.log('BUT warning', json.warning);
+                //         }
+                //     }
+                // });
+                // res.json({"text": "working..."});
+
+                var response = {
+                    "response_type": "in_channel",
+                    "text": donger,
+                }
+                res.json(response);
             }
         });
     }
