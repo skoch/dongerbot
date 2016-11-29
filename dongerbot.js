@@ -59,11 +59,22 @@ app.post('/', function(req, res) {
 
                 var response = {
                     "token": "xoxb-111099496950-DcPmvvpn544CTx2OapnNzxSC",
+                    "username": text,
                     "channel": channel,
                     "text": donger,
                     "as_user": true,
                 }
-                res.json(response);
+
+                request.post('https://slack.com/api/chat.postMessage', response, function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        console.log('allgood?');
+                    }
+
+                    if (error) {
+                        console.log('error', error);
+                    }
+                });
+                // res.json(response);
 
                 // var response = {
                 //     "response_type": "in_channel",
