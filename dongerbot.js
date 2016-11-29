@@ -52,7 +52,7 @@ app.post('/', function(req, res) {
                 // console.log('attributes', response.attributes.labels[0]);
 
                 // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
-                let donger = response.attributes.labels[0] ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
+                let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
 
                 var response = {
                     "response_type": "in_channel",
