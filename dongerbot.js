@@ -58,14 +58,20 @@ app.post('/', function(req, res) {
                 let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
 
                 var response = {
+                    // dongerbot token
                     "token": "xoxb-111099496950-DcPmvvpn544CTx2OapnNzxSC",
+                    // testing token generated on Slack
+                    // "token": "xoxp-2151820749-2304102342-13165708866-92ad67edf7",
                     "username": text,
                     "channel": channel,
                     "text": donger,
                     "as_user": true,
                 }
 
+                console.log('response', response);
+
                 request.post('https://slack.com/api/chat.postMessage', response, function (error, response, body) {
+                    console.log('chat.postMessage response', response);
                     if (!error && response.statusCode == 200) {
                         console.log('allgood?');
                     }
