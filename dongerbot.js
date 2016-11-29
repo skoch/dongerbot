@@ -59,9 +59,9 @@ app.post('/', function(req, res) {
 
                 var data = {
                     // dongerbot token
-                    // "token": "xoxb-111099496950-DcPmvvpn544CTx2OapnNzxSC",
+                    "token": "xoxb-111099496950-DcPmvvpn544CTx2OapnNzxSC",
                     // testing token generated on Slack
-                    "token": "xoxp-2151820749-2304102342-13165708866-92ad67edf7",
+                    // "token": "xoxp-2151820749-2304102342-13165708866-92ad67edf7",
                     "username": text,
                     "channel": channel,
                     "text": donger,
@@ -75,15 +75,15 @@ app.post('/', function(req, res) {
                     console.log('ok?', response.body.ok);
                     console.log('ok???', response.body["ok"]);
 
-                    if (!response.body.ok) {
-                        console.log('bad');
-                        console.log('response.body.error', response.body.error);
-                    } else {
-                        console.log('good');
-                        if (response.body.warning) {
-                            console.log('BUT response.body.warning', response.body.warning);
-                        }
-                    }
+                    // if (!response.body.ok) {
+                    //     console.log('bad');
+                    //     console.log('response.body.error', response.body.error);
+                    // } else {
+                    //     console.log('good');
+                    //     if (response.body.warning) {
+                    //         console.log('BUT response.body.warning', response.body.warning);
+                    //     }
+                    // }
 
                     // if (!error && response.statusCode == 200) {
                     //     console.log('allgood?');
