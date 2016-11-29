@@ -50,7 +50,7 @@ app.post('/', function(req, res) {
             callback: function (error, options, response) {
                 console.log('>>', response.rows.cellsArray[0]);
 
-                let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : ⛔;
+                let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
                 var response = {
                     "response_type": "in_channel",
                     "text": donger,
