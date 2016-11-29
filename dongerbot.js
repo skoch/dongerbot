@@ -73,6 +73,7 @@ app.post('/', function(req, res) {
                 request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
                     console.log('>>>>>', response.body);
                     console.log('ok?', response.body.ok);
+                    console.log('ok???', response.body["ok"]);
 
                     if (!response.body.ok) {
                         console.log('bad');
