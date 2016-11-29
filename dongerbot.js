@@ -48,9 +48,11 @@ app.post('/', function(req, res) {
             query: `Select B where A = "${text}"`,
             reset: true,
             callback: function (error, options, response) {
-                console.log('>>', response);
+                console.log('>>', response.rows);
+                console.log('attributes', attributes.labels[0]);
 
-                let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
+                // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
+                let donger = 'no donger';
                 var response = {
                     "response_type": "in_channel",
                     "text": donger,
