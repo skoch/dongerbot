@@ -20,71 +20,43 @@ app.get('/', function(req, res) {
 
 app.get('/slack-auth', function(req, res) {
     let data = {form: {
-        client_id: '2151820749.106696824658',
-        client_secret: '1cd19097e7623950824df98bb5321c05',
+        client_id: '2151820749.109274070033',
+        client_secret: '414896e4aff009e444bbc1a07b0c10a2',
         code: req.query.code
     }};
 
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            // You are done.
-            // If you want to get team info, you need to get the token here
-            let token = JSON.parse(body).access_token; // Auth token
-
-            // Get the team domain name to redirect to the team URL after auth
-            request.post('https://slack.com/api/team.info', {form: {token: token}}, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    if(JSON.parse(body).error == 'missing_scope') {
-                        res.send('Phteven has been added to your team!');
-                    } else {
-                        let team = JSON.parse(body).team.domain;
-                        res.redirect('http://' +team+ '.slack.com');
-                    }
-                }
-            });
+            res.redirect('https://s-media-cache-ak0.pinimg.com/originals/b7/7b/8c/b77b8ceaa61f60b6d96cae2e92a3e83e.gif');
         }
     });
 });
 
 app.post('/', function(req, res) {
-    // token
-    // B8ii7NIl0AHV4FoH21XvgRg5
     if (!req.body) {
         return res.sendStatus(400);
     }
 
-    if (req.body.token == 'B8ii7NIl0AHV4FoH21XvgRg5') {
+    if (req.body.token == 'hAfjfpjE1BJsyeTQnjECTL53') {
         console.log('req.body.text', req.body.text);
 
-        if (req.body.text) {
-            console.log('we have text');
+        var donger = req.body.text ? req.body.text : 'excuseme';
 
-            sheetrock({
-                url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
-                query: "Select A",
-                callback: function (error, options, response) {
-                    console.log('callback');
-                    var urls = [];
-                    for (let entry of response.rows) {
-                        urls.push(entry.cellsArray[0]);
-                    }
-                    var url = urls[Math.floor(Math.random()*urls.length)];
-                    console.log('url', url);
+        sheetrock({
+            // url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
+            url: "https://docs.google.com/spreadsheets/d/1j1l5VS4R326U2QLmC_7ZY3MZWbL-S1ETN7JVtyX2ALg/edit?usp=sharing",
+            query: "Select A where B contains'"+ donger +"'",
+            reset: true,
+            callback: function (error, options, response) {
+                console.log('>>', response.rows.cellsArray[0]);
 
-                    var response = {
-                        "response_type": "in_channel",
-                        "attachments": [
-                            {
-                                "image_url": url
-                            }
-                        ]
-                    }
-                    res.json(response);
-                },
-                reset: true
-            });
-
-        }
+                var response = {
+                    "response_type": "in_channel",
+                    "text": response.rows.cellsArray[0],
+                }
+                res.json(response);
+            }
+        });
     }
 });
 
