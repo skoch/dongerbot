@@ -10,6 +10,10 @@ app.set('port', (process.env.PORT || 3000));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get('/test', function(req, res) {
+    let url = `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit?usp=sharing`;
+    console.log('url', url);
+});
 app.get('/', function(req, res) {
     // GET where ssl_check set to 1 from Slack
     if (req.query.ssl_check == 1) {
@@ -20,8 +24,8 @@ app.get('/', function(req, res) {
 
 app.get('/slack-auth', function(req, res) {
     let data = {form: {
-        client_id: '2151820749.109274070033',
-        client_secret: '414896e4aff009e444bbc1a07b0c10a2',
+        client_id: process.env.SLACK_CLIENT_ID,
+        client_secret: process.env.SLACK_CLIENT_SECRET,
         code: req.query.code
     }};
 
@@ -37,14 +41,14 @@ app.post('/', function(req, res) {
         return res.sendStatus(400);
     }
 
-    if (req.body.token == 'hAfjfpjE1BJsyeTQnjECTL53') {
+    if (req.body.token == process.env.SLACK_AUTH_TOKEN) {
         console.log('req.body.text', req.body.text);
 
         var donger = req.body.text ? req.body.text : 'excuseme';
-
+        ${expression}
         sheetrock({
             // url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
-            url: "https://docs.google.com/spreadsheets/d/1j1l5VS4R326U2QLmC_7ZY3MZWbL-S1ETN7JVtyX2ALg/edit?usp=sharing",
+            url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit?usp=sharing`,
             query: "Select A where B contains'"+ donger +"'",
             reset: true,
             callback: function (error, options, response) {
