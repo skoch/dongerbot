@@ -27,8 +27,11 @@ app.get('/slack-auth', function(req, res) {
 
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
 
-        let bot_access_token = JSON.parse(body).bot.bot_access_token;
-        console.log('bot_access_token', bot_access_token);
+        // let bot_access_token = JSON.parse(body).bot.bot_access_token;
+        // console.log('bot_access_token', bot_access_token);
+
+        let token = JSON.parse(body).access_token; // Auth token
+        console.log('token', token);
 
         if (!error && response.statusCode == 200) {
             res.redirect(process.env.THANK_YOU_REDIRECT);
@@ -57,13 +60,13 @@ app.post('/', function(req, res) {
             callback: function (error, options, response) {
                 // console.log('>>', response.rows);
                 // console.log('attributes', response.attributes.labels[0]);
+                // response.rows.cellsArray[0] // nope
 
-                // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
                 let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
 
                 let data = {form: {
-                    // dongerbot token
-                    "token": process.env.SLACK_BOT_TOKEN,
+                    // "token": process.env.SLACK_BOT_TOKEN,
+                    "token": process.env.SLACK_AUTH_TOKEN,
                     "username": text,
                     "channel": channel,
                     "text": donger,
