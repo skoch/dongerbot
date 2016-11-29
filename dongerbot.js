@@ -45,7 +45,7 @@ app.post('/', function(req, res) {
             // url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
             // url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit?usp=sharing`,
             url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit#gid=0`,
-            query: `Select B where A = '${text}'`,
+            query: `Select B where A = "${text}"`,
             reset: true,
             callback: function (error, options, response) {
                 console.log('>>', response);
