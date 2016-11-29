@@ -48,11 +48,12 @@ app.post('/', function(req, res) {
             query: `Select B where A = "${text}"`,
             reset: true,
             callback: function (error, options, response) {
-                console.log('>>', response.rows);
-                console.log('attributes', response.attributes.labels[0]);
+                // console.log('>>', response.rows);
+                // console.log('attributes', response.attributes.labels[0]);
 
                 // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
-                let donger = 'no donger';
+                let donger = response.attributes.labels[0] ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
+
                 var response = {
                     "response_type": "in_channel",
                     "text": donger,
