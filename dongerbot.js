@@ -38,17 +38,16 @@ app.post('/', function(req, res) {
     }
 
     if (req.body.token == process.env.SLACK_AUTH_TOKEN) {
-        console.log('req.body.text', req.body.text);
 
         let text = req.body.text ? req.body.text : 'excuseme';
-        console.log('text', text);
+
         sheetrock({
             // url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
             url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit?usp=sharing`,
             query: `Select A where B = ${text}`,
             reset: true,
             callback: function (error, options, response) {
-                console.log('>>', response.rows.cellsArray[0]);
+                console.log('>>', response);
 
                 let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
                 var response = {
