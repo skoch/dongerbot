@@ -45,7 +45,7 @@ app.post('/', function(req, res) {
         console.log('req.body.text', req.body.text);
 
         var donger = req.body.text ? req.body.text : 'excuseme';
-        ${expression}
+
         sheetrock({
             // url: "https://docs.google.com/spreadsheets/d/1QO5dyK6EgIP81SGZMlHMk8xn88u_budzF2Td3OoOZzY/edit#gid=0",
             url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit?usp=sharing`,
