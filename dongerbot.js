@@ -49,7 +49,7 @@ app.post('/', function(req, res) {
             reset: true,
             callback: function (error, options, response) {
                 console.log('>>', response.rows);
-                console.log('attributes', attributes.labels[0]);
+                console.log('attributes', response.attributes.labels[0]);
 
                 // let donger = response.rows.cellsArray[0] ? response.rows.cellsArray[0] : 'no donger';
                 let donger = 'no donger';
