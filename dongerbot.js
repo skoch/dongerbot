@@ -71,14 +71,15 @@ app.post('/', function(req, res) {
                 console.log('response', response);
 
                 request.post('https://slack.com/api/chat.postMessage', response, function (error, response, body) {
-                    console.log('chat.postMessage response', response);
-                    if (!error && response.statusCode == 200) {
-                        console.log('allgood?');
-                    }
+                    console.log('chat.postMessage response', body.ok);
 
-                    if (error) {
-                        console.log('error', error);
-                    }
+                    // if (!error && response.statusCode == 200) {
+                    //     console.log('allgood?');
+                    // }
+
+                    // if (error) {
+                    //     console.log('error', error);
+                    // }
                 });
                 // res.json(response);
 
