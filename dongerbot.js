@@ -67,10 +67,10 @@ app.post('/', function(req, res) {
                 let data = {form: {
                     // "token": process.env.SLACK_BOT_TOKEN,
                     "token": process.env.SLACK_API_TOKEN,
-                    "username": text,
+                    // "username": text,
                     "channel": channel,
                     "text": donger,
-                    "as_user": true,
+                    // "as_user": true,
                 }};
 
                 console.log('data', data);
