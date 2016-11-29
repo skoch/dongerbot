@@ -73,6 +73,16 @@ app.post('/', function(req, res) {
                 request.post('https://slack.com/api/chat.postMessage', response, function (error, response, body) {
                     console.log('chat.postMessage response', body.ok);
 
+                    if (!body.ok) {
+                        console.log('bad');
+                        console.log('body.error', body.error);
+                    } else {
+                        console.log('good');
+                        if (body.warning) {
+                            console.log('BUT body.warning', body.warning);
+                        }
+                    }
+
                     // if (!error && response.statusCode == 200) {
                     //     console.log('allgood?');
                     // }
@@ -88,6 +98,7 @@ app.post('/', function(req, res) {
                 //     "text": donger,
                 // }
                 // res.json(response);
+                res.json({"text": "working..."});
             }
         });
     }
