@@ -71,17 +71,17 @@ app.post('/', function(req, res) {
                 // console.log('data', data);
 
                 request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
-                    console.log('>>>>>', response.ok);
+                    console.log('>>>>>', response.body);
 
-                    if (!response.ok) {
-                        console.log('bad');
-                        console.log('response.error', response.error);
-                    } else {
-                        console.log('good');
-                        if (body.warning) {
-                            console.log('BUT response.warning', response.warning);
-                        }
-                    }
+                    // if (!response.ok) {
+                    //     console.log('bad');
+                    //     console.log('response.error', response.error);
+                    // } else {
+                    //     console.log('good');
+                    //     if (body.warning) {
+                    //         console.log('BUT response.warning', response.warning);
+                    //     }
+                    // }
 
                     // if (!error && response.statusCode == 200) {
                     //     console.log('allgood?');
