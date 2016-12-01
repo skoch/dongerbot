@@ -2,13 +2,32 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const sheetrock = require('sheetrock');
+// const fs = require('fs');
+// const http = require('http');
+// const https = require('https');
+const dongles = require('./dongles');
+const _ = require('lodash');
 
 const app = express();
 
-app.set('port', (process.env.PORT || 3000));
+// const privateKey = fs.readFileSync('ssl/key.pem');
+// const certificate = fs.readFileSync('ssl/cert.pem');
+// const credentials = {key: privateKey, cert: certificate};
+
+// app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 8443));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// app.get('/secure', function(req, res) {
+//     res.writeHead(200);
+
+//     var rando = _.sample(dongles);
+//     console.log('rando', rando);
+
+//     res.end("hello world\n");
+// });
 
 app.get('/', function(req, res) {
     // GET where ssl_check set to 1 from Slack
@@ -46,58 +65,45 @@ app.post('/', function(req, res) {
 
     if (req.body.token == process.env.SLACK_AUTH_TOKEN) {
 
-        let text = req.body.text ? req.body.text : 'excuseme';
         let channel = req.body.channel_id ? req.body.channel_id : '#general';
-
         // console.log('channel', channel);
+        // let text = req.body.text ? req.body.text : 'giveup';
 
-        sheetrock({
-            url: `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}/edit#gid=0`,
-            query: `Select B where A = "${text}"`,
-            reset: true,
-            callback: function (error, options, response) {
-                // console.log('>>', response.rows);
-                // console.log('attributes', response.attributes.labels[0]);
-                // response.rows.cellsArray[0] // nope
-
-                let donger = response.attributes ? response.attributes.labels[0] : 'ヽ| ͡☉ ︿ ͡☉ |ノ⌒.';
-
-                // let data = {form: {
-                //     // "token": process.env.SLACK_BOT_TOKEN,
-                //     "token": process.env.SLACK_API_TOKEN,
-                //     // "username": text,
-                //     "channel": channel,
-                //     "text": donger,
-                //     // "as_user": true,
-                // }};
-
-                // // console.log('data', data);
-
-                // request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
-                //     let json = JSON.parse(body);
-                //     console.log('ok?', json.ok);
-
-                //     if (!json.ok) {
-                //         console.log('bad');
-                //         console.log('error', json.error);
-                //     } else {
-                //         console.log('good');
-                //         if (json.warning) {
-                //             console.log('BUT warning', json.warning);
-                //         }
-                //     }
-                // });
-                // res.json({"text": "working..."});
-
-                var response = {
-                    "response_type": "in_channel",
-                    "text": donger,
-                }
-                res.json(response);
+        // we are attempting to search for something...
+        let entry;
+        if (req.body.text) {
+            entry = _.find(dongles, {'name': req.body.text});
+            if (!entry) {
+               // entry = _.sample(dongles);
+               // we didn't find one, so let's give up
+               entry = _.find(dongles, {'name': 'giveup'});
             }
-        });
+        } else {
+            // we are asking for a random one since we didn't supply some text
+            entry = _.sample(dongles);
+        }
+
+        console.log('entry', entry);
+        // let dongle = JSON.parse(entry).dongle;
+        let donger = entry.dongle;
+        console.log('donger', donger);
+        // {"name":"giveup","dongle":"ヽ| ͡☉ ︿ ͡☉ |ノ⌒."}
+        var response = {
+            "response_type": "in_channel",
+            "text": donger,
+        }
+        res.json(response);
+
     }
 });
+
+// // var httpServer = http.createServer(app);
+// var httpsServer = https.createServer(credentials, app);
+
+// // httpServer.listen(8080);
+// httpsServer.listen(app.get('port'), function(){
+//     console.log('Node app is running on port', app.get('port'));
+// });
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
